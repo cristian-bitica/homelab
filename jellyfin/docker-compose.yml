@@ -1,0 +1,32 @@
+networks:
+  skynet:
+    external: true
+
+services:
+  jellyfin:
+    image: jellyfin/jellyfin@sha256:89d020f73334642943eca3269d2a652ad897481bdf0bd9827e108c939af49f24
+    container_name: jellyfin
+    hostname: jellyfin
+    user: $UID:$GID
+    networks:
+      skynet:
+        ipv4_address: 172.22.0.4
+    volumes:
+      - /mnt/5dd038e4-e1e4-46fb-8c77-cd3dfc661647/jellyfin/config:/config
+      - /mnt/5dd038e4-e1e4-46fb-8c77-cd3dfc661647/jellyfin/cache:/cache
+      - type: bind
+        source: /mnt/5dd038e4-e1e4-46fb-8c77-cd3dfc661647/media
+        target: /media
+      # Optional - extra fonts to be used during transcoding with subtitle burn-in
+      - type: bind
+        source: /usr/share/fonts
+        target: /usr/local/share/fonts/custom
+        read_only: true
+    restart: 'unless-stopped'
+    ports:
+      - 8096:8096
+    devices:
+      - /dev/dri:/dev/dri
+    # Optional - alternative address used for autodiscovery
+    # environment:
+    #   - JELLYFIN_PublishedServerUrl=http://example.com

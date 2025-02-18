@@ -1,0 +1,23 @@
+networks:
+  skynet:
+    external: true
+
+volumes:
+  portainer_data:
+
+services:
+  portainer:
+    image: portainer/portainer-ce@sha256:bd8f7a6d98e2a512e18272c38914abd1e92d663451f3c925d502a8557a3b92d7  #lts tag
+    container_name: portainer
+    hostname: portainer
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - portainer_data:/data
+    ports:
+      - 9443:9443
+    networks:
+      skynet:
+        ipv4_address: 172.22.0.2

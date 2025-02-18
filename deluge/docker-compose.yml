@@ -1,0 +1,28 @@
+---
+
+networks:
+  skynet:
+    external: true
+
+services:
+  deluge:
+    image: lscr.io/linuxserver/deluge@sha256:290cc22d9f6dcdfa2e7baf99ca5f37d5d7dae4abb7fb35c6d94a2789bdaf6614
+    container_name: deluge
+    hostname: deluge
+    environment:
+      - PUID=$UID
+      - PGID=$GID
+      - TZ=Europe/Bucharest
+      - DELUGE_LOGLEVEL=error #optional
+    volumes:
+      - /mnt/5dd038e4-e1e4-46fb-8c77-cd3dfc661647/deluge/config:/config
+      - /mnt/5dd038e4-e1e4-46fb-8c77-cd3dfc661647/media:/downloads
+    ports:
+      - 8112:8112
+      - 6881:6881
+      - 6881:6881/udp
+      - 58846:58846 #optional
+    restart: unless-stopped
+    networks:
+      skynet:
+        ipv4_address: 172.22.0.3
