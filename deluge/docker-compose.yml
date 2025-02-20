@@ -25,4 +25,4 @@ services:
     restart: unless-stopped
     networks:
       skynet:
-        ipv4_address: 172.22.0.3
+        ipv4_address: 172.22.0.6
