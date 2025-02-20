@@ -1,4 +1,3 @@
----
 networks:
   skynet:
     external: true
@@ -21,7 +20,7 @@ services:
       - nginx_service_volume:/etc/letsencrypt
     networks:
       skynet:
-        ipv4_address: 172.22.0.5
+        ipv4_address: 172.22.0.3
     environment:
       DB_POSTGRES_HOST: nginx-db
       DB_POSTGRES_PORT: 5432
@@ -30,7 +29,7 @@ services:
       DB_POSTGRES_NAME: 'npm'
     depends_on:
       - nginx-db
-      
+
   nginx-db:
     container_name: nginx-db
     hostname: nginx-db
@@ -43,7 +42,7 @@ services:
       - nginx_service_volume:/var/lib/postgresql/data
     networks:
       skynet:
-        ipv4_address: 172.22.0.6
+        ipv4_address: 172.22.0.4
 
 secrets:
   db_password:
