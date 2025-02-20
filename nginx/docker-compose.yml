@@ -3,7 +3,8 @@ networks:
     external: true
 
 volumes:
-  nginx_service_volume:
+  nginx_data:
+  nginx_db_data:
 
 services:
   nginx:
@@ -16,8 +17,8 @@ services:
       - '81:81'
       - '443:443'
     volumes:
-      - nginx_service_volume:/data
-      - nginx_service_volume:/etc/letsencrypt
+      - nginx_data:/data
+      - nginx_data:/etc/letsencrypt
     networks:
       skynet:
         ipv4_address: 172.22.0.3
@@ -39,7 +40,7 @@ services:
       POSTGRES_PASSWORD: /run/secrets/db_password
       POSTGRES_DB: npm
     volumes:
-      - nginx_service_volume:/var/lib/postgresql/data
+      - nginx_db_data:/var/lib/postgresql/data
     networks:
       skynet:
         ipv4_address: 172.22.0.4
