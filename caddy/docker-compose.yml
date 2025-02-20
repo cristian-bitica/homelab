@@ -13,7 +13,7 @@ services:
       - "443:443"
       - "443:443/udp"
     volumes:
-      - $PWD/conf:/etc/caddy
+      - ~/Repositories/homelab/conf:/etc/caddy
       - caddy_data:/data
       - caddy_config:/config
     networks:
