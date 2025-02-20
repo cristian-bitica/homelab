@@ -10,7 +10,7 @@ services:
     user: $UID:$GID
     networks:
       skynet:
-        ipv4_address: 172.22.0.4
+        ipv4_address: 172.22.0.5
     volumes:
       - /mnt/5dd038e4-e1e4-46fb-8c77-cd3dfc661647/jellyfin/config:/config
       - /mnt/5dd038e4-e1e4-46fb-8c77-cd3dfc661647/jellyfin/cache:/cache
