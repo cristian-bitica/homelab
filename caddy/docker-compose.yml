@@ -5,6 +5,7 @@ networks:
 services:
   caddy:
     image: caddy:alpine@sha256:b4e3952384eb9524a887633ce65c752dd7c71314d2c2acf98cd5c715aaa534f0
+    hostname: caddy
     restart: unless-stopped
     cap_add:
       - NET_ADMIN
@@ -13,7 +14,7 @@ services:
       - "443:443"
       - "443:443/udp"
     volumes:
-      - ~/Repositories/homelab/conf:/etc/caddy
+      - ~/Repositories/homelab/caddy/conf:/etc/caddy
       - caddy_data:/data
       - caddy_config:/config
     networks:
