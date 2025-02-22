@@ -12,10 +12,10 @@ services:
       skynet:
         ipv4_address: 172.22.0.5
     volumes:
-      - /mnt/5dd038e4-e1e4-46fb-8c77-cd3dfc661647/jellyfin/config:/config
-      - /mnt/5dd038e4-e1e4-46fb-8c77-cd3dfc661647/jellyfin/cache:/cache
+      - /run/media/cristian/xs_ssd/jellyfin/config:/config
+      - /run/media/cristian/xs_ssd/jellyfin/cache:/cache
       - type: bind
-        source: /mnt/5dd038e4-e1e4-46fb-8c77-cd3dfc661647/media
+        source: /run/media/cristian/xs_ssd/media
         target: /media
       # Optional - extra fonts to be used during transcoding with subtitle burn-in
       - type: bind
