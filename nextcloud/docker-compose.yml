@@ -4,7 +4,7 @@ networks:
 
 services:
   nextcloud:
-    image: nextcloud/all-in-one@sha256:f23345999de82dc3fbf77f3d0d6315dacdc0656e5fab84cc6421f5509372b40c
+    image: nextcloud/all-in-one:latest
     init: true
     restart: always
     container_name: nextcloud-aio-mastercontainer # This line is not allowed to be changed as otherwise AIO will not work correctly
