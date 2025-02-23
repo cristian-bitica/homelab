@@ -4,7 +4,9 @@ networks:
 
 volumes:
   nginx_data:
+    name: nginx_data
   nginx_db_data:
+    name: nginx_db_data
 
 services:
   nginx:
