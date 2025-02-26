@@ -5,7 +5,7 @@ networks:
 
 services:
   nextcloud-db:
-    image: mariadb@sha256:310d29fbb58169dcddb384b0ff138edb081e2773d6e2eceb976b3668089f2f84
+    image: mariadb:latest
     container_name: nextcloud-db
     hostname: nextcloud-db
     restart: unless-stopped
@@ -22,7 +22,7 @@ services:
       - MYSQL_USER=$NEXTCLOUD_DB_USER
       
   nextcloud:
-    image: nextcloud@sha256:49feadfd86a831eb995916d95d5e1f12736381384630c3892d4f3715867a886e
+    image: nextcloud:stable-apache
     container_name: nextcloud
     hostname: nextcloud
     restart: unless-stopped
