@@ -1,12 +1,6 @@
-networks:
-  skynet:
-    external: true
-
 volumes:
   nginx_data:
     name: nginx_data
-  nginx_db_data:
-    name: nginx_db_data
 
 services:
   nginx:
@@ -14,39 +8,11 @@ services:
     image: 'jc21/nginx-proxy-manager:latest'
     restart: unless-stopped
     hostname: nginx
-    ports:
-      - '80:80'
-      - '81:81'
-      - '443:443'
+    network_mode: host
     volumes:
       - nginx_data:/data
       - nginx_data:/etc/letsencrypt
-    networks:
-      skynet:
-        ipv4_address: 172.22.0.3
-    environment:
-      DB_POSTGRES_HOST: nginx-db
-      DB_POSTGRES_PORT: 5432
-      DB_POSTGRES_USER: 'npm'
-      DB_POSTGRES_PASSWORD: /run/secrets/db_password
-      DB_POSTGRES_NAME: 'npm'
-    depends_on:
-      - nginx-db
-
-  nginx-db:
-    container_name: nginx-db
-    hostname: nginx-db
-    image: postgres:latest
-    environment:
-      POSTGRES_USER: npm
-      POSTGRES_PASSWORD: /run/secrets/db_password
-      POSTGRES_DB: npm
-    volumes:
-      - nginx_db_data:/var/lib/postgresql/data
-    networks:
-      skynet:
-        ipv4_address: 172.22.0.4
-
-secrets:
-  db_password:
-    file: nginx_db_password.txt
+  healthcheck:
+    test: ["CMD", "/usr/bin/check-health"]
+    interval: 10s
+    timeout: 3s
