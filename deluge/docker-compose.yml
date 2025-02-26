@@ -15,8 +15,8 @@ services:
       - TZ=Europe/Bucharest
       - DELUGE_LOGLEVEL=error #optional
     volumes:
-      - /mnt/5dd038e4-e1e4-46fb-8c77-cd3dfc661647/deluge/config:/config
-      - /mnt/5dd038e4-e1e4-46fb-8c77-cd3dfc661647/media:/downloads
+      - /media/xs_ssd/deluge/config:/config
+      - /media/xs_ssd/media:/downloads
     ports:
       - 8112:8112
       - 6881:6881
