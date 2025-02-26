@@ -28,7 +28,7 @@ services:
     restart: unless-stopped
     networks:
       skynet:
-        ipv4_address: 172.20.0.7
+        ipv4_address: 172.22.0.7
     ports:
       - 8080:80
     links:
