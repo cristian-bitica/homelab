@@ -36,7 +36,7 @@ services:
       - MARIADB_PASSWORD=/run/secrets/db_pwd
     user: $UID:$GID
     networks:
-      skynet-bridge:
+      skynet:
         ipv4_address: 172.22.0.11
     volumes:
       - /home/cristian/Repositories/homeassistant/mariadb:/var/lib/mysql
