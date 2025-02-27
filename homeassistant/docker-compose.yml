@@ -1,0 +1,51 @@
+networks:
+  skynet:
+    external: true
+
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    ports:
+      - 8123:8123
+    volumes:
+      - /home/cristian/Repositories/homeassistant/config:/config
+      - /run/dbus:/run/dbus:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /media/nextcloud:/system_monitor/nextcloud:ro
+      - /media/backup:/system_monitor/backup:ro
+    user: $UID:$GID
+    restart: unless-stopped
+    privileged: true
+    hostname: homeassistant
+    network_mode: host
+    depends_on:
+      - homeassistant-db
+    devices:
+      - /dev/dri:/dev/dri
+  
+  homeassistant-db:
+    image: 'mariadb:latest'
+    container_name: homeassistant-db
+    restart: unless-stopped
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      - MARIADB_ROOT_PASSWORD=/run/secrets/db_root_pwd
+      - MARIADB_DATABASE=homeassistant
+      - MARIADB_USER=homeassistant
+      - MARIADB_PASSWORD=/run/secrets/db_pwd
+    user: $UID:$GID
+    networks:
+      skynet-bridge:
+        ipv4_address: 172.22.0.11
+    volumes:
+      - /home/cristian/Repositories/homeassistant/mariadb:/var/lib/mysql
+    secrets:
+      - db_root_pwd
+      - db_pwd
+  
+secrets:
+  db_root_pwd:
+    file: /home/cristian/Repositories/homeassistant/secrets/db_root_pwd.txt
+  db_pwd:
+    file: /home/cristian/Repositories/homeassistant/secrets/db_pwd.txt
