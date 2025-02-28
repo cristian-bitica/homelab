@@ -9,7 +9,7 @@ services:
     ports:
       - 8123:8123
     volumes:
-      - /home/cristian/Repositories/homeassistant/config:/config
+      - /home/cristian/Repositories/homeassistant/data:/config
       - /run/dbus:/run/dbus:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /media/nextcloud:/system_monitor/nextcloud:ro

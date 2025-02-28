@@ -22,3 +22,6 @@ services:
     networks:
       skynet:
         ipv4_address: 172.22.0.2
+    environment:
+      - UID=$UID
+      - GID=$GID
