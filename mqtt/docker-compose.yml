@@ -1,0 +1,20 @@
+networks:
+  skynet:
+    external: true
+    
+services:
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    restart: unless-stopped
+    networks:
+      skynet:
+        ipv4_address: 172.22.0.12
+    ports:
+      - 1883:1883
+      - 9001:9001
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /home/cristian/Repositories/mqtt/config:/mosquitto/config
+      - /home/cristian/Repositories/mqtt/data:/mosquitto/data
+      - /home/cristian/Repositories/mqtt/log:/mosquitto/log

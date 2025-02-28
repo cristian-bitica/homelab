@@ -9,6 +9,7 @@ services:
     ports:
       - 8123:8123
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - /home/cristian/Repositories/homeassistant/data:/config
       - /run/dbus:/run/dbus:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -40,6 +41,7 @@ services:
       skynet:
         ipv4_address: 172.22.0.11
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - /home/cristian/Repositories/homeassistant/mariadb:/var/lib/mysql
     secrets:
       - db_root_pwd

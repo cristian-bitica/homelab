@@ -10,6 +10,7 @@ services:
     hostname: nginx
     network_mode: host
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - nginx_data:/data
       - nginx_data:/etc/letsencrypt
   healthcheck:

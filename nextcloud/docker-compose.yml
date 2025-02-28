@@ -14,6 +14,7 @@ services:
       skynet:
         ipv4_address: 172.22.0.8
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - /media/nextcloud/mariadb:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=$NEXTCLOUD_DB_ROOT_PASSWORD
@@ -34,6 +35,7 @@ services:
     links:
       - nextcloud-db
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - /media/nextcloud/data:/var/www/html
     environment:
       - MYSQL_PASSWORD=$NEXTCLOUD_DB_PASSWORD

@@ -12,6 +12,7 @@ services:
       skynet:
         ipv4_address: 172.22.0.5
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - /mnt/xs_ssd/jellyfin/config:/config
       - /mnt/xs_ssd/jellyfin/cache:/cache
       - type: bind

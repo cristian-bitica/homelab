@@ -12,7 +12,7 @@ services:
     environment:
       - PUID=$UID
       - PGID=$GID
-      - TZ=Europe/Bucharest
+      - TZ='Europe/Bucharest'
       - DELUGE_LOGLEVEL=error #optional
     volumes:
       - /media/xs_ssd/deluge/config:/config
