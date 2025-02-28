@@ -14,7 +14,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /media/nextcloud:/system_monitor/nextcloud:ro
       - /media/backup:/system_monitor/backup:ro
-    user: $UID:$GID
+    # user: $UID:$GID
     restart: unless-stopped
     privileged: true
     hostname: homeassistant
