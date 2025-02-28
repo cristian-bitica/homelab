@@ -19,7 +19,7 @@ services:
     privileged: true
     hostname: homeassistant
     network_mode: host
-    links:
+    depends-on:
       - homeassistant-db
     devices:
       - /dev/dri:/dev/dri
