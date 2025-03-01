@@ -1,0 +1,31 @@
+networks:
+  skynet:
+    external: true
+
+volumes:
+  audiobookshelf_data:
+    name: audiobookshelf_data
+
+services:
+  audiobookshelf:
+    container_name: audiobookshelf
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    hostname: audiobookshelf
+    ports:
+      - 13378:80
+    volumes:
+      # - /media/Portable/Audiobooks:/audiobooks
+      - type: volume
+        source: audiobookshelf_data
+        target: /config
+        volume:
+          subpath: config
+      - type: volume
+        source: audiobookshelf_data
+        target: /metadata
+        volume:
+          subpath: metadata
+    restart: unless-stopped
+    networks:
+      skynet:
+        ipv4_address: 172.22.0.14

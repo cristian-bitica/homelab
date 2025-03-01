@@ -1,0 +1,41 @@
+networks:
+  skynet:
+    external: true
+
+volumes:
+  plex_data:
+    name: plex_data
+
+services:
+  plex:
+    image: plexinc/pms-docker:latest
+    container_name: plex
+    hostname: plex
+    user: "${UID}:${GID}"
+    networks:
+      skynet:
+        ipv4_address: 172.22.0.80
+    ports:
+      - 32400:32400/tcp
+      - 1901:1900/udp
+      - 32469:32469/tcp
+    environment:
+      - TZ=Europe/Bucharest
+      - PLEX_CLAIM= #optional
+      - ADVERTISE_IP="https://plex.bitica.xyz/"
+    volumes:
+      - type: volume
+        source: plex_data
+        target: /config
+        volume:
+          subpath: config
+      - type: volume
+        source: plex_data
+        target: /metadata
+        volume:
+          subpath: metadata
+      - /media/Media/Jellyfin/media:/media
+      - /media/Portable:/external_media
+    restart: unless-stopped
+    devices:
+      - /dev/dri:/dev/dri

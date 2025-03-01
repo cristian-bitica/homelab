@@ -1,0 +1,39 @@
+
+networks:
+  skynet:
+    external: true
+
+services:
+  wireguard:
+    image: lscr.io/linuxserver/wireguard:latest
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - SERVERURL=$SERVERURL #optional
+      - SERVERPORT=$SERVERPORT #optional
+      - PEERS=iphone,mac,samsung #optional
+      - PEERDNS=auto #optional
+      # - INTERNAL_SUBNET=10.13.13.0 #optional
+      - ALLOWEDIPS=0.0.0.0/0 #optional
+      # - PERSISTENTKEEPALIVE_PEERS= #optional
+      - LOG_CONFS=true #optional
+    volumes:
+      - /home/cristian/Repositories/wireguard/config:/config
+      - /lib/modules:/lib/modules #optional
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 51820:51820/udp
+
+    networks:
+      skynet:
+        ipv4_address: 172.22.0.20
+    sysctls:
+      - net.ipv4.ip_forward=1              # forward requests
+      - net.ipv4.conf.all.src_valid_mark=1 # Permits rp_filter to function when the fwmark is used for routing traffic in both directions
+
+    restart: unless-stopped

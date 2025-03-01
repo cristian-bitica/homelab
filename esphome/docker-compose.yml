@@ -1,0 +1,15 @@
+
+services:
+  esphome:
+    container_name: esphome
+    # image: esphome/esphome@sha256:07cbbe0cc9d82d505dedbd40238fd9b800be6f1683d71e1a637456c474f2857e
+    image: esphome/esphome@sha256:783e2131fcff2c457846339a80f6ed981e58e5f86de3578f742e3bed87f7d5b2  # 2023.11
+    volumes:
+      - /home/cristian/Repositories/ESPHome/config:/config
+      - /run/dbus:/run/dbus:ro
+      - /etc/localtime:/etc/localtime:ro
+    restart: 'no'
+    privileged: true
+    network_mode: host
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
