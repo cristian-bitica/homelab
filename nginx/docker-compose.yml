@@ -1,3 +1,7 @@
+networks:
+  skynet:
+    external: true
+
 volumes:
   nginx_data:
     name: nginx_data
@@ -8,7 +12,8 @@ services:
     image: 'jc21/nginx-proxy-manager:latest'
     restart: unless-stopped
     hostname: nginx
-    network_mode: host
+    network:
+      - skynet
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - nginx_data:/data
