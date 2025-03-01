@@ -12,7 +12,7 @@ services:
     image: 'jc21/nginx-proxy-manager:latest'
     restart: unless-stopped
     hostname: nginx
-    network:
+    networks:
       skynet:
         ipv4_address: 172.22.0.3
     volumes:
