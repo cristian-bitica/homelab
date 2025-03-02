@@ -2,10 +2,6 @@ networks:
   skynet:
     external: true
 
-volumes:
-  audiobookshelf_data:
-    name: audiobookshelf_data
-
 services:
   audiobookshelf:
     container_name: audiobookshelf
@@ -14,18 +10,13 @@ services:
     ports:
       - 13378:80
     volumes:
-      # - /media/Portable/Audiobooks:/audiobooks
-      - type: volume
-        source: audiobookshelf_data
-        target: /config
-        volume:
-          subpath: config
-      - type: volume
-        source: audiobookshelf_data
-        target: /metadata
-        volume:
-          subpath: metadata
+      - /media/media_ssd_2/Audiobooks:/audiobooks
+      - /home/cristian/Repositories/audiobookshelf/config:/config
+      - /home/cristian/Repositories/audiobookshelf/metadata:/metadata
     restart: unless-stopped
     networks:
       skynet:
         ipv4_address: 172.22.0.14
+    environment:
+      - PUID=$UID
+      - PGID=$GID
