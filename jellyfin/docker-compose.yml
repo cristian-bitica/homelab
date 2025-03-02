@@ -13,11 +13,14 @@ services:
         ipv4_address: 172.22.0.5
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /mnt/xs_ssd/jellyfin/config:/config
-      - /mnt/xs_ssd/jellyfin/cache:/cache
+      - /home/cristian/Repositories/jellyfin/config:/config
+      - /home/cristian/Repositories/jellyfin/cache:/cache
       - type: bind
-        source: /mnt/xs_ssd/media
-        target: /media
+        source: /media/media_ssd_1
+        target: /media_ssd_1
+      - type: bind
+        source: /media/media_ssd_2
+        target: /media_ssd_2
       # Optional - extra fonts to be used during transcoding with subtitle burn-in
       - type: bind
         source: /usr/share/fonts

@@ -24,18 +24,10 @@ services:
       - PLEX_CLAIM= #optional
       - ADVERTISE_IP="https://plex.bitica.xyz/"
     volumes:
-      - type: volume
-        source: plex_data
-        target: /config
-        volume:
-          subpath: config
-      - type: volume
-        source: plex_data
-        target: /metadata
-        volume:
-          subpath: metadata
-      - /media/Media/Jellyfin/media:/media
-      - /media/Portable:/external_media
+      - /home/cristian/Repositories/plex/config:/config
+      - /home/cristian/Repositories/plex/metadata:/metadata
+      - /media/media_ssd_1:/media_ssd_1
+      - /media/media_ssd_2:/media_ssd_2
     restart: unless-stopped
     devices:
       - /dev/dri:/dev/dri

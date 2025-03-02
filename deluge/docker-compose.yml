@@ -15,8 +15,9 @@ services:
       - TZ='Europe/Bucharest'
       - DELUGE_LOGLEVEL=error #optional
     volumes:
-      - /media/xs_ssd/deluge/config:/config
-      - /media/xs_ssd/media:/downloads
+      - /home/cristian/Repositories/deluge/config:/config
+      - /media/media_ssd_1:/media_ssd_1
+      - /media/media_ssd_2:/media_ssd_2
     ports:
       - 8112:8112
       - 6881:6881
