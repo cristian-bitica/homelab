@@ -2,16 +2,12 @@ networks:
   skynet:
     external: true
 
-volumes:
-  plex_data:
-    name: plex_data
-
 services:
   plex:
     image: plexinc/pms-docker:latest
     container_name: plex
     hostname: plex
-    user: "${UID}:${GID}"
+    user: $UID:$GID
     networks:
       skynet:
         ipv4_address: 172.22.0.80
