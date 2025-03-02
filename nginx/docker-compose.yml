@@ -12,7 +12,6 @@ services:
       - '81:81'
       - '443:443'
     volumes:
-     - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
       - /home/cristian/Repositories/nginx/data:/data
       - /home/cristian/Repositories/nginx/letsencrypt:/etc/letsencrypt
@@ -47,6 +46,7 @@ services:
       skynet:
         ipv4_address: 172.22.0.4
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - /home/cristian/Repositories/nginx/mysql:/var/lib/mysql
 
 secrets:
