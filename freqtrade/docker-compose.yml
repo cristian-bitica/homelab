@@ -13,7 +13,7 @@ services:
       skynet:
         ipv4_address: 172.22.0.50
     volumes:
-      - "/home/cristian/Repositories/freqtrade/user_data:/freqtrade/user_data"
+      - "/home/cristian/Repositories/freqtrade/dorel:/freqtrade/user_data"
     ports:
       - "8085:8080"
     # Default command used when running `docker compose up`
@@ -43,7 +43,7 @@ services:
       skynet:
         ipv4_address: 172.22.0.51
     volumes:
-      - "/home/cristian/Repositories/freqtrade2/user_data:/freqtrade/user_data"
+      - "/home/cristian/Repositories/freqtrade/gigel:/freqtrade/user_data"
     ports:
       - "8086:8080"
     # Default command used when running `docker compose up`
@@ -74,7 +74,7 @@ services:
       skynet:
         ipv4_address: 172.22.0.52
     volumes:
-      - "/home/cristian/Repositories/freqtrade3/user_data:/freqtrade/user_data"
+      - "/home/cristian/Repositories/freqtrade/mirel:/freqtrade/user_data"
     ports:
       - "8090:8080"
     # Default command used when running `docker compose up`
