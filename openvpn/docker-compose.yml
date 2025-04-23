@@ -1,0 +1,15 @@
+
+services:
+  openvpn:
+    cap_add:
+     - NET_ADMIN
+     - MKNOD
+    image: openvpn/openvpn-as
+    container_name: openvpn
+    ports:
+     - "1194:1194/udp"
+     - "943:943"  # webUI
+     - "443:443"
+    restart: unless-stopped
+    volumes:
+     - /home/cristian/Repositories/openvpn:/openvpn
