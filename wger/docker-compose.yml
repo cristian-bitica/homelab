@@ -86,7 +86,7 @@ services:
     env_file:
       - ./prod.env
     volumes:
-      - /home/cristian/Repositories/wger/celery/media:/home/wger/media
+      - /home/cristian/Repositories/wger/wger-data/media:/home/wger/media
     depends_on:
       wger:
         condition: service_healthy
@@ -104,7 +104,7 @@ services:
     image: wger/server:latest
     command: /start-beat
     volumes:
-      - /home/cristian/Repositories/wger/celery/celery-beat:/home/wger/beat/
+      - /home/cristian/Repositories/wger/celery-beat:/home/wger/beat/
     env_file:
       - ./prod.env
     depends_on:
