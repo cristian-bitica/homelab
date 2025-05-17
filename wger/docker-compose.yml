@@ -18,7 +18,7 @@ services:
       cache:
         condition: service_healthy
     env_file:
-      - /home/cristian/Repositories/wger/docker/config/prod.env
+      - /home/cristian/Repositories/wger/custom-conf/prod.env
     volumes:
       - /home/cristian/Repositories/wger/wger-data/static:/home/wger/static
       - /home/cristian/Repositories/wger/wger-data/media:/home/wger/media
@@ -62,7 +62,7 @@ services:
     expose:
       - 6379
     volumes:
-      - /home/cristian/Repositories/wger/docker/config/redis.conf:/usr/local/etc/redis/redis.conf
+      - /home/cristian/Repositories/wger/custom-conf/redis.conf:/usr/local/etc/redis/redis.conf
       - /home/cristian/Repositories/wger/redis-data:/data
     command: [ "redis-server", "/usr/local/etc/redis/redis.conf"]
     healthcheck:
@@ -84,7 +84,7 @@ services:
     image: wger/server:latest
     command: /start-worker
     env_file:
-      - /home/cristian/Repositories/wger/docker/config/prod.env
+      - /home/cristian/Repositories/wger/custom-conf/prod.env
     volumes:
       - /home/cristian/Repositories/wger/celery/media:/home/wger/media
     depends_on:
@@ -106,7 +106,7 @@ services:
     volumes:
       - /home/cristian/Repositories/wger/celery/celery-beat:/home/wger/beat/
     env_file:
-      - /home/cristian/Repositories/wger/docker/config/prod.env
+      - /home/cristian/Repositories/wger/custom-conf/prod.env
     depends_on:
       celery_worker:
         condition: service_healthy
