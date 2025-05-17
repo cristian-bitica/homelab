@@ -3,7 +3,6 @@ networks:
   skynet:
     external: true
 
-services:
   openvpn:
     cap_add:
      - NET_ADMIN
@@ -19,29 +18,6 @@ services:
      - /home/cristian/Repositories/openvpn:/openvpn
     networks:
       skynet:
-        ipv4_address: 172.22.0.14
-    devices:
-      - /dev/net/tun:
-networks:
-  skynet:
-    external: true
-
-services:
-  openvpn:
-    cap_add:
-     - NET_ADMIN
-     - MKNOD
-    image: openvpn/openvpn-as
-    container_name: openvpn
-    ports:
-     - "1194:1194/udp"
-     - "943:943"  # webUI
-     # - "443:443"
-    restart: unless-stopped
-    volumes:
-     - /home/cristian/Repositories/openvpn:/openvpn
-    networks:
-      skynet:
-        ipv4_address: 172.22.0.14
+        ipv4_address: 172.22.0.15
     devices:
       - /dev/net/tun:/dev/net/tun

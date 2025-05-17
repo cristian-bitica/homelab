@@ -1,0 +1,115 @@
+#
+# Please consult the `Deployment` section in the docs if you want to deploy
+# this. You *need* to keep this nginx service, even if you have your own,
+# otherwise the static files will not be served correctly! If you do remove
+# it, configure yours similarly to what's in config/nginx.conf
+# Also take a look at the "Static files" section in the .env file
+
+networks:
+  skynet:
+    external: true
+
+services:
+  web:
+    image: wger/server:latest
+    depends_on:
+      db:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
+    env_file:
+      - /home/cristian/Repositories/wger/docker/config/prod.env
+    volumes:
+      - /home/cristian/Repositories/wger/wger-data/static:/home/wger/static
+      - /home/cristian/Repositories/wger/wger-data/media:/home/wger/media
+    expose:
+      - 8000
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:8000
+      interval: 10s
+      timeout: 5s
+      start_period: 300s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      skynet:
+        ipv4_address: 172.22.0.20
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=wger
+      - POSTGRES_PASSWORD=wger
+      - POSTGRES_DB=wger
+      - TZ=Europe/Berlin
+    volumes:
+      - /home/cristian/Repositories/wger/postgres-data:/var/lib/postgresql/data/
+    expose:
+      - 5432
+    healthcheck:
+      test: pg_isready -U wger
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+    networks:
+      skynet:
+        ipv4_address: 172.22.0.21
+
+  cache:
+    image: redis
+    expose:
+      - 6379
+    volumes:
+      - /home/cristian/Repositories/wger/docker/config/redis.conf:/usr/local/etc/redis/redis.conf
+      - /home/cristian/Repositories/wger/redis-data:/data
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf"]
+    healthcheck:
+      test: redis-cli ping
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+
+    # You probably want to limit the memory usage of the cache, otherwise it might
+    # hog all the available memory. Remove or change according to your needs.
+    mem_limit: 5gb
+    networks:
+      skynet:
+        ipv4_address: 172.22.0.22
+
+  celery_worker:
+    image: wger/server:latest
+    command: /start-worker
+    env_file:
+      - /home/cristian/Repositories/wger/docker/config/prod.env
+    volumes:
+      - /home/cristian/Repositories/wger/celery/media:/home/wger/media
+    depends_on:
+      web:
+        condition: service_healthy
+    healthcheck:
+      test: celery -A wger inspect ping
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      skynet:
+        ipv4_address: 172.22.0.23
+
+  celery_beat:
+    image: wger/server:latest
+    command: /start-beat
+    volumes:
+      - /home/cristian/Repositories/wger/celery/celery-beat:/home/wger/beat/
+    env_file:
+      - /home/cristian/Repositories/wger/docker/config/prod.env
+    depends_on:
+      celery_worker:
+        condition: service_healthy
+    networks:
+      skynet:
+        ipv4_address: 172.22.0.24
