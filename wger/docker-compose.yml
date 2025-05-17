@@ -10,7 +10,7 @@ networks:
     external: true
 
 services:
-  web:
+  wger:
     image: wger/server:latest
     depends_on:
       db:
@@ -88,7 +88,7 @@ services:
     volumes:
       - /home/cristian/Repositories/wger/celery/media:/home/wger/media
     depends_on:
-      web:
+      wger:
         condition: service_healthy
     healthcheck:
       test: celery -A wger inspect ping
