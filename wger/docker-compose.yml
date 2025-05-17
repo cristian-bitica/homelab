@@ -18,7 +18,7 @@ services:
       cache:
         condition: service_healthy
     env_file:
-      - ./wger/custom-conf/prod.env
+      - ./prod.env
     volumes:
       - /home/cristian/Repositories/wger/wger-data/static:/home/wger/static
       - /home/cristian/Repositories/wger/wger-data/media:/home/wger/media
@@ -84,7 +84,7 @@ services:
     image: wger/server:latest
     command: /start-worker
     env_file:
-      - ./wger/custom-conf/prod.env
+      - ./prod.env
     volumes:
       - /home/cristian/Repositories/wger/celery/media:/home/wger/media
     depends_on:
@@ -106,7 +106,7 @@ services:
     volumes:
       - /home/cristian/Repositories/wger/celery/celery-beat:/home/wger/beat/
     env_file:
-      - ./wger/custom-conf/prod.env
+      - ./prod.env
     depends_on:
       celery_worker:
         condition: service_healthy
