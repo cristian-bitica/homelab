@@ -15,6 +15,8 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /home/cristian/Repositories/nginx/data:/data
       - /home/cristian/Repositories/nginx/letsencrypt:/etc/letsencrypt
+      - /home/cristian/Repositories/wger/wger-data/static:/wger/static:ro
+      - /home/cristian/Repositories/wger/wger-data/media:/wger/media:ro
 #      - /home/cristian/Repositories/nginx/nginx:/etc/nginx
     environment:
       DB_MYSQL_HOST: "nginx-db"
