@@ -65,8 +65,8 @@ services:
       - TZ=Europe/Berlin
     volumes:
       - /home/cristian/Repositories/wger/postgres-data:/var/lib/postgresql/data/
-    ports:
-      - 5432:5432
+    expose:
+      - 5432
     healthcheck:
       test: pg_isready -U wger
       interval: 10s
