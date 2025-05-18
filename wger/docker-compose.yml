@@ -22,8 +22,8 @@ services:
     volumes:
       - /home/cristian/Repositories/wger/wger-data/static:/home/wger/static
       - /home/cristian/Repositories/wger/wger-data/media:/home/wger/media
-    ports:
-      - 8000:8000
+    expose:
+      - 8000
     healthcheck:
       test: wget --no-verbose --tries=1 --spider http://localhost:8000
       interval: 10s
@@ -34,6 +34,27 @@ services:
     networks:
       skynet:
         ipv4_address: 172.22.0.20
+
+  nginx:
+    image: nginx:stable
+    depends_on:
+      - wger
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - /home/cristian/Repositories/wger/wger-data/static:/wger/static:ro
+      - /home/cristian/Repositories/wger/wger-data/media:/wger/media:ro
+    ports:
+      - "8001:80"
+    healthcheck:
+      test: service nginx status
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+    networks:
+      skynet:
+        ipv4_address: 172.22.0.21
 
   db:
     image: postgres:15-alpine
@@ -55,12 +76,12 @@ services:
     restart: unless-stopped
     networks:
       skynet:
-        ipv4_address: 172.22.0.21
+        ipv4_address: 172.22.0.22
 
   cache:
     image: redis
-    ports:
-      - 6379:6379
+    expose:
+      - 6379
     volumes:
       - ./redis.conf:/usr/local/etc/redis/redis.conf
       - /home/cristian/Repositories/wger/redis-data:/data
@@ -78,7 +99,7 @@ services:
     mem_limit: 5gb
     networks:
       skynet:
-        ipv4_address: 172.22.0.22
+        ipv4_address: 172.22.0.23
 
   celery_worker:
     image: wger/server:latest
@@ -98,7 +119,7 @@ services:
       start_period: 30s
     networks:
       skynet:
-        ipv4_address: 172.22.0.23
+        ipv4_address: 172.22.0.24
 
   celery_beat:
     image: wger/server:latest
@@ -112,4 +133,4 @@ services:
         condition: service_healthy
     networks:
       skynet:
-        ipv4_address: 172.22.0.24
+        ipv4_address: 172.22.0.25
