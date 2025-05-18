@@ -44,7 +44,7 @@ services:
       - /home/cristian/Repositories/wger/wger-data/static:/wger/static:ro
       - /home/cristian/Repositories/wger/wger-data/media:/wger/media:ro
     ports:
-      - "8080:80"
+      - "8088:80"
     healthcheck:
       test: service nginx status
       interval: 10s
