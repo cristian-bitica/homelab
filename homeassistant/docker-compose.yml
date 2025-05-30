@@ -26,7 +26,7 @@ services:
       - /dev/dri:/dev/dri
   
   homeassistant-db:
-    image: 'mariadb:latest'
+    image: 'mariadb:11.7.2'
     container_name: homeassistant-db
     hostname: homeassistant-db
     restart: unless-stopped
