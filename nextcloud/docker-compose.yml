@@ -5,7 +5,7 @@ networks:
 
 services:
   nextcloud-db:
-    image: mariadb@sha256:a914eff5d2eb4c650a4e787e453d52a4ffba977632bd624cc6e63d0c9c4c2d65
+    image: mariadb:latest
     container_name: nextcloud-db
     hostname: nextcloud-db
     restart: unless-stopped
