@@ -19,7 +19,7 @@ services:
       - PLEX_GID=$GID
       - TZ=Europe/Bucharest
       - PLEX_CLAIM= #optional
-      - ADVERTISE_IP="https://plex.bitica.xyz/"
+      - ADVERTISE_IP="https://plex.bitica.online/"
     volumes:
       - /home/cristian/Repositories/plex/config:/config
       - /home/cristian/Repositories/plex/metadata:/metadata
