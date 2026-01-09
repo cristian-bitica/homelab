@@ -18,7 +18,7 @@ services:
       - PLEX_GID=1000
       - TZ=Europe/Bucharest
       - PLEX_CLAIM= #optional
-      - ADVERTISE_IP="https://plex.bitica.online/" 
+      - ADVERTISE_IP="https://plex.bitica.online/"
     volumes:
       - /srv/docker/plex/config:/config
       - /srv/docker/plex/metadata:/metadata
