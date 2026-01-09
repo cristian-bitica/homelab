@@ -1,0 +1,16 @@
+networks:
+  skynet:
+    external: true
+
+services:
+  bentopdf:
+     # Using Docker Hub
+    image: bentopdf/bentopdf-simple:latest
+     # Or using GitHub Container Registry
+     # image: ghcr.io/alam00000/bentopdf-simple:latest
+    container_name: bentopdf
+    restart: unless-stopped
+    ports:
+     - '3000:8080'
+    networks:
+     - skynet

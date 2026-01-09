@@ -4,17 +4,16 @@ networks:
 
 services:
   jellyfin:
-    image: jellyfin/jellyfin@sha256:89d020f73334642943eca3269d2a652ad897481bdf0bd9827e108c939af49f24
+    image: jellyfin/jellyfin:latest
     container_name: jellyfin
     hostname: jellyfin
-    user: $UID:$GID
+    user: 1000:1000
     networks:
-      skynet:
-        ipv4_address: 172.22.0.5
+      - skynet
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /home/cristian/Repositories/jellyfin/config:/config
-      - /home/cristian/Repositories/jellyfin/cache:/cache
+      - /srv/docker/jellyfin/config:/config
+      - /srv/docker/jellyfin/cache:/cache
       - type: bind
         source: /media/media_ssd_1
         target: /media_ssd_1

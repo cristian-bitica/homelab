@@ -2,10 +2,6 @@ networks:
   skynet:
     external: true
 
-volumes:
-  portainer_data:
-    name: portainer_data
-
 services:
   portainer:
     image: portainer/portainer-ce:lts
@@ -17,12 +13,11 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - portainer_data:/data
+      - /srv/docker/portainer/data:/data
     ports:
       - 9443:9443
     networks:
-      skynet:
-        ipv4_address: 172.22.0.2
+      - skynet
     environment:
-      - UID=$UID
-      - GID=$GID
+      - UID=1000
+      - GID=1000

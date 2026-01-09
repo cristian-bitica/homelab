@@ -11,8 +11,7 @@ services:
     restart: unless-stopped
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     networks:
-      skynet:
-        ipv4_address: 172.22.0.8
+      - skynet
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /media/nextcloud/mariadb:/var/lib/mysql
@@ -28,8 +27,7 @@ services:
     hostname: nextcloud
     restart: unless-stopped
     networks:
-      skynet:
-        ipv4_address: 172.22.0.7
+      - skynet
     ports:
       - 8080:80
     depends_on:

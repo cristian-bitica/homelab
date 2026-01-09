@@ -17,7 +17,6 @@ networks:
     volumes:
      - /home/cristian/Repositories/openvpn:/openvpn
     networks:
-      skynet:
-        ipv4_address: 172.22.0.15
+      - skynet
     devices:
       - /dev/net/tun:/dev/net/tun

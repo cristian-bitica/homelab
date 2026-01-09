@@ -6,16 +6,16 @@ networks:
 
 services:
   deluge:
-    image: lscr.io/linuxserver/deluge@sha256:290cc22d9f6dcdfa2e7baf99ca5f37d5d7dae4abb7fb35c6d94a2789bdaf6614
+    image: lscr.io/linuxserver/deluge:latest
     container_name: deluge
     hostname: deluge
     environment:
-      - PUID=$UID
-      - PGID=$GID
+      - PUID=1000
+      - PGID=1000
       - TZ='Europe/Bucharest'
       - DELUGE_LOGLEVEL=error #optional
     volumes:
-      - /home/cristian/Repositories/deluge/config:/config
+      - /srv/docker/deluge/config:/config
       - /media/media_ssd_1:/media_ssd_1
       - /media/media_ssd_2:/media_ssd_2
     ports:
@@ -25,5 +25,4 @@ services:
       - 58846:58846 #optional
     restart: unless-stopped
     networks:
-      skynet:
-        ipv4_address: 172.22.0.6
+      - skynet
