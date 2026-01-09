@@ -11,12 +11,11 @@ services:
       - 13378:80
     volumes:
       - /media/media_ssd_2/Audiobooks:/audiobooks
-      - /home/cristian/Repositories/audiobookshelf/config:/config
-      - /home/cristian/Repositories/audiobookshelf/metadata:/metadata
+      - /srv/docker/audiobookshelf/config:/config
+      - /srv/docker/audiobookshelf/metadata:/metadata
     restart: unless-stopped
     networks:
-      skynet:
-        ipv4_address: 172.22.0.14
+      - skynet
     environment:
       - PUID=$UID
       - PGID=$GID

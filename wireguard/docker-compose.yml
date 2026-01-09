@@ -30,8 +30,7 @@ services:
       - 51820:51820/udp
 
     networks:
-      skynet:
-        ipv4_address: 172.22.0.20
+      - skynet
     sysctls:
       - net.ipv4.ip_forward=1              # forward requests
       - net.ipv4.conf.all.src_valid_mark=1 # Permits rp_filter to function when the fwmark is used for routing traffic in both directions

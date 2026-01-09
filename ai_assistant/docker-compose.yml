@@ -16,8 +16,7 @@ services:
     volumes:
       - /media/Portable/Others/ollama:/root/.ollama
     networks:
-      skynet:
-        ipv4_address: 172.22.0.144
+      - skynet
 
   webui:
     image: ghcr.io/open-webui/open-webui:main
@@ -33,5 +32,4 @@ services:
     volumes:
       - /home/cristian/Repositories/ai_assistant/webui-data:/app/backend/data
     networks:
-      skynet:
-        ipv4_address: 172.22.0.145
+      - skynet

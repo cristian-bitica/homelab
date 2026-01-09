@@ -22,9 +22,9 @@ services:
       DB_MYSQL_USER: "nginx-pm"
       DB_MYSQL_PASSWORD: /run/secrets/db_pwd
       DB_MYSQL_NAME: "npm"
+      TZ: Europe/Bucharest
     networks:
-      skynet:
-        ipv4_address: 172.22.0.3
+      - skynet
     # network_mode: host
     depends_on:
       - nginx-db
@@ -43,8 +43,7 @@ services:
       MYSQL_USER: "nginx-pm"
       MYSQL_PASSWORD: /run/secrets/db_pwd
     networks:
-      skynet:
-        ipv4_address: 172.22.0.4
+      - skynet
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /home/cristian/Repositories/nginx/mysql:/var/lib/mysql

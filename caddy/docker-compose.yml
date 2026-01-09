@@ -1,0 +1,29 @@
+
+services:
+  caddy:
+    build: .
+    container_name: caddy
+    hostname: caddy
+    restart: always
+    ports:
+     - 80:80
+     - 443:443
+    env_file:
+      - .env
+    environment:
+      CLOUDFLARE_API_TOKEN: ${CLOUDFLARE_API_TOKEN}
+      ACME_EMAIL: ${ACME_EMAIL}
+      ACME_AGREE: ${ACME_AGREE}
+      TZ: ${TZ}
+    volumes:
+     - /var/run/docker.sock:/var/run/docker.sock
+     - /srv/docker/caddy/data:/data
+     - /srv/docker/caddy/config:/config
+     - /srv/docker/caddy/Caddyfile:/etc/caddy/Caddyfile
+    extra_hosts:
+       - "host.docker.internal:host-gateway"
+    networks:
+     - skynet
+networks:
+  skynet:
+    external: true
