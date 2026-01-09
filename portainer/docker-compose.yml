@@ -2,10 +2,6 @@ networks:
   skynet:
     external: true
 
-volumes:
-  portainer_data:
-    name: portainer_data
-
 services:
   portainer:
     image: portainer/portainer-ce:lts
