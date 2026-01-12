@@ -1,20 +1,26 @@
----
+
+name: opencloud
+networks:
+  skynet:
+    external: true
+
 services:
   opencloud:
-    image: ${OC_DOCKER_IMAGE:-opencloudeu/opencloud-rolling}:${OC_DOCKER_TAG:-latest}
-    # changelog: https://github.com/opencloud-eu/opencloud/tree/main/changelog
-    # release notes: https://docs.opencloud.eu/opencloud_release_notes.html
+    container_name: opencloud
     hostname: opencloud
+    image: opencloudeu/opencloud:latest
     user: ${OC_CONTAINER_UID_GID:-1000:1000}
     networks:
-      skynet:
+      - skynet
     entrypoint:
-      - /bin/sh
-    # run opencloud init to initialize a configuration file with random secrets
-    # it will fail on subsequent runs, because the config file already exists
-    # therefore we ignore the error and then start the opencloud server
+       - /bin/sh
+     # run opencloud init to initialize a configuration file with random secrets
+     # it will fail on subsequent runs, because the config file already exists
+     # therefore we ignore the error and then start the opencloud server
     command: ["-c", "opencloud init || true; opencloud server"]
     environment:
+      # OC_INSECURE: true
+      # IDM_ADMIN_PASSWORD: admin-1234
       # enable services that are not started automatically
       OC_ADD_RUN_SERVICES: ${START_ADDITIONAL_SERVICES}
       OC_URL: https://${OC_DOMAIN:-cloud.opencloud.test}${TRAEFIK_PORT_HTTPS:+:}${TRAEFIK_PORT_HTTPS:-}
@@ -31,20 +37,6 @@ services:
       IDM_CREATE_DEMO_USERS: "${DEMO_USERS:-false}"
       # admin password
       IDM_ADMIN_PASSWORD: "${INITIAL_ADMIN_PASSWORD}"
-      # email server (if configured)
-      NOTIFICATIONS_SMTP_HOST: "${SMTP_HOST}"
-      NOTIFICATIONS_SMTP_PORT: "${SMTP_PORT}"
-      NOTIFICATIONS_SMTP_SENDER: "${SMTP_SENDER:-OpenCloud Notifications <notifications@cloud.opencloud.test>}"
-      NOTIFICATIONS_SMTP_USERNAME: "${SMTP_USERNAME}"
-      NOTIFICATIONS_SMTP_PASSWORD: "${SMTP_PASSWORD}"
-      NOTIFICATIONS_SMTP_INSECURE: "${SMTP_INSECURE:-false}"
-      NOTIFICATIONS_SMTP_AUTHENTICATION: "${SMTP_AUTHENTICATION}"
-      NOTIFICATIONS_SMTP_ENCRYPTION: "${SMTP_TRANSPORT_ENCRYPTION:-none}"
-      FRONTEND_ARCHIVER_MAX_SIZE: "10000000000"
-      FRONTEND_CHECK_FOR_UPDATES: "${CHECK_FOR_UPDATES:-true}"
-      PROXY_CSP_CONFIG_FILE_LOCATION: /etc/opencloud/csp.yaml
-      # enable to allow using the banned passwords list
-      OC_PASSWORD_POLICY_BANNED_PASSWORDS_LIST: banned-password-list.txt
       # control the password enforcement and policy for public shares
       OC_SHARING_PUBLIC_SHARE_MUST_HAVE_PASSWORD: "${OC_SHARING_PUBLIC_SHARE_MUST_HAVE_PASSWORD:-true}"
       OC_SHARING_PUBLIC_WRITEABLE_SHARE_MUST_HAVE_PASSWORD: "${OC_SHARING_PUBLIC_WRITEABLE_SHARE_MUST_HAVE_PASSWORD:-false}"
@@ -56,21 +48,15 @@ services:
       OC_PASSWORD_POLICY_MIN_SPECIAL_CHARACTERS: "${OC_PASSWORD_POLICY_MIN_SPECIAL_CHARACTERS:-1}"
       # default language for services/WebUI; defaults to English, language code (ISO 639-1, e.g. de, en, fr)
       OC_DEFAULT_LANGUAGE: ${DEFAULT_LANGUAGE}
+      PROXY_HTTP_ADDR: "0.0.0.0:9200"
     volumes:
-      - ./config/opencloud/csp.yaml:/etc/opencloud/csp.yaml
-      - ./config/opencloud/banned-password-list.txt:/etc/opencloud/banned-password-list.txt
-      # configure the .env file to use own paths instead of docker internal volumes
-      - ${OC_CONFIG_DIR:-opencloud-config}:/etc/opencloud
-      - ${OC_DATA_DIR:-opencloud-data}:/var/lib/opencloud
-      - ${OC_APPS_DIR:-./config/opencloud/apps}:/var/lib/opencloud/web/assets/apps
+      # Do not edit the next line. If you want to change the media storage location on your system, edit the value of UPLOAD_LOCATION in the .env file
+      - /srv/docker/opencloud/data:/var/lib/opencloud
+      - /srv/docker/opencloud/config:/etc/opencloud
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - '9200:9200'
     logging:
       driver: ${LOG_DRIVER:-local}
     restart: always
 
-# volumes:
-#   opencloud-config:
-#   opencloud-data:
-
-networks:
-  skynet:
-    external: true
