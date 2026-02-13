@@ -3,7 +3,6 @@ set -euo pipefail
 
 PROJECT_DIR="."
 ENV_FILE="${PROJECT_DIR}/.env"
-BACKUP_ROOT="/media/backup/opencloud_backup"
 
 # Load environment
 if [ -f "$ENV_FILE" ]; then
@@ -27,11 +26,11 @@ echo "Stopping compose stack..."
 docker compose stop
 
 echo "Running rsync..."
-rsync -aAX --delete \
+rsync -aHAX --numeric-ids --delete \
   --link-dest="$LATEST/config" \
   "$SRC_CONFIG" "$DEST/config"
 
-rsync -aAX --delete \
+rsync -aHAX --numeric-ids --delete \
   --link-dest="$LATEST/data" \
   "$SRC_DATA" "$DEST/data"
 
