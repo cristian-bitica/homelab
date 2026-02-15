@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-PROJECT_DIR="."
+PROJECT_DIR="~/Repositories/homelab/opencloud"
 ENV_FILE="${PROJECT_DIR}/.env"
 
 # Load environment
