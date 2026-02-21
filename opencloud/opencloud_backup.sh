@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-PROJECT_DIR="~/Repositories/homelab/opencloud"
+PROJECT_DIR="/home/cristian/Repositories/homelab/opencloud"
 ENV_FILE="${PROJECT_DIR}/.env"
 
 # Load environment
@@ -26,11 +26,11 @@ echo "Stopping compose stack..."
 docker compose stop
 
 echo "Running rsync..."
-rsync -aHAX --numeric-ids --delete \
+rsync -aHAX --delete --numeric-ids --delete \
   --link-dest="$LATEST/config" \
   "$SRC_CONFIG" "$DEST/config"
 
-rsync -aHAX --numeric-ids --delete \
+rsync -aHAX --delete --numeric-ids --delete \
   --link-dest="$LATEST/data" \
   "$SRC_DATA" "$DEST/data"
 

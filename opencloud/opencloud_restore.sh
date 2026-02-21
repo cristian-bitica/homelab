@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-PROJECT_DIR="~/Repositories/homelab/opencloud"
+PROJECT_DIR="/home/cristian/Repositories/homelab/opencloud"
 ENV_FILE="${PROJECT_DIR}/.env"
 
 # Load .env
@@ -30,12 +30,12 @@ echo "Stopping compose stack..."
 docker compose stop
 
 echo "Restoring config..."
-rsync -aAX --delete \
+rsync -aAHX --delete \
     "${SOURCE}/config/" \
     "$DEST_CONFIG"
 
 echo "Restoring data..."
-rsync -aAX --delete \
+rsync -aAHX --delete \
     "${SOURCE}/data/" \
     "$DEST_DATA"
 
