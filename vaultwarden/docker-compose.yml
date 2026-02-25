@@ -1,0 +1,18 @@
+networks:
+  skynet:
+    external: true
+
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    hostname: vaultwarden
+    restart: unless-stopped
+    environment:
+      DOMAIN: "https://vw.bitica.online"
+    volumes:
+      - /srv/docker/vaultwarden/:/data/
+    ports:
+      - 127.0.0.1:8000:80
+    networks:
+      - skynet
